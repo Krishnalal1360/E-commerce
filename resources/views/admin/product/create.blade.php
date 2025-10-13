@@ -1,131 +1,121 @@
 <x-app-layout>
-    {{--  
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
-
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("You're logged in!") }}
-                </div>
-            </div>
-        </div>
-    </div>
-    --}}
-    
-    <section class="wsus__product mt_145 pb_100">
+    <section class="wsus__product mt-5 pb-5">
         <div class="container">
-            {{-- 
-            <div class="alert alert-info">Welcome To Dashboard!</div>
-            --}}
 
+            {{-- Display Validation Errors --}}
             @if ($errors->any())
-                @foreach ($errors->all() as $error)
-                    <div class="alert alert-danger">{{ $error }}</div>
-                @endforeach
+                <div class="alert alert-danger">
+                    <ul class="mb-0">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
             @endif
-            
+
             <h4 class="pt-3 pb-3 text-primary">Dashboard</h4>
-            
+
             <div class="card">
                 <div class="card-header d-flex justify-content-between">
                     <h5>Create Product</h5>
                     <a href="{{ route('dashboard') }}" class="btn btn-primary btn-sm">Cancel</a>
                 </div>
-                
+
                 <div class="card-body">
-                    <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
+                    <form id="product-form" action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                    <div class="form-group">
-                        <x-input-label for="image">Image</x-input-label>
-                        <x-text-input id="image" class="form-control" class="mt-2 mb-2" type="file" name="image" required></x-text-input>
-                    </div>                    
 
-                    <div class="form-group">
-                        <x-input-label for="images">Images</x-input-label>
-                        <x-text-input id="images" class="form-control" class="mt-2 mb-2" type="file" name="images[]" multiple required></x-text-input>
-                    </div>
+                        {{-- Single Image --}}
+                        <div class="mb-3">
+                            <label for="image" class="form-label">Image</label>
+                            <input type="file" class="form-control" id="image" name="image" required>
+                        </div>
 
-                    <div class="form-group">
-                        <x-input-label for="name">Name</x-input-label>
-                        <x-text-input id="name" class="form-control" class="mt-2 mb-2" type="text" name="name" required></x-text-input>
-                    </div>
+                        {{-- Multiple Images --}}
+                        <div class="mb-3">
+                            <label for="images" class="form-label">Images</label>
+                            <input type="file" class="form-control" id="images" name="images[]" multiple required>
+                        </div>
 
-                    <div class="form-group">
-                        <x-input-label for="price">Price</x-input-label>
-                        <x-text-input id="price" class="form-control" class="mt-2 mb-2" type="number" name="price" required></x-text-input>
-                    </div>
+                        {{-- Name --}}
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                        </div>
 
-                    <div class="form-group">
-                        <x-input-label for="color">Color</x-input-label>
-                        <x-select-input id="color" {{--class="form-control"--}} class="mt-2 mb-2" type="text" name="color" required>
-                            <option value="">-- Select Color --</option>
-                            <option value="red">Red</option>
-                            <option value="blue">Blue</option>
-                            <option value="green">Green</option>
-                            <option value="black">Black</option>
-                            <option value="white">White</option>
-                        </x-text-input>
-                    </div>
+                        {{-- Price --}}
+                        <div class="mb-3">
+                            <label for="price" class="form-label">Price</label>
+                            <input type="number" class="form-control" id="price" name="price" required>
+                        </div>
 
-                    <div class="form-group">
-                        <x-input-label for="tag">Tag</x-input-label>
-                        <x-text-input id="tag" class="form-control" class="mt-2 mb-2" type="text" name="tag" required></x-text-input>
-                    </div>
+                        {{-- Color --}}
+                        <div class="mb-3">
+                            <label for="color" class="form-label">Color</label>
+                            <select id="color" name="color" class="form-select" required>
+                                <option value="">-- Select Color --</option>
+                                <option value="red">Red</option>
+                                <option value="blue">Blue</option>
+                                <option value="green">Green</option>
+                                <option value="black">Black</option>
+                                <option value="white">White</option>
+                            </select>
+                        </div>
 
-                    <div class="form-group">
-                        <x-input-label for="quantity">Quantity</x-input-label>
-                        <x-text-input id="quantity" class="form-control" class="mt-2 mb-2" type="text" name="quantity" required></x-text-input>
-                    </div>
+                        {{-- Tag --}}
+                        <div class="mb-3">
+                            <label for="tag" class="form-label">Tag</label>
+                            <input type="text" class="form-control" id="tag" name="tag" required>
+                        </div>
 
-                    <div class="form-group">
-                        <x-input-label for="sku">SKU</x-input-label>
-                        <x-text-input id="sku" class="form-control" class="mt-2 mb-2" type="text" name="sku" required></x-text-input>
-                    </div>
+                        {{-- Quantity --}}
+                        <div class="mb-3">
+                            <label for="quantity" class="form-label">Quantity</label>
+                            <input type="number" class="form-control" id="quantity" name="quantity" required>
+                        </div>
 
-                    <div class="form-group">
-                        <x-input-label for="tinymce_editor">Description</x-input-label>
-                        <textarea id="tinymce_editor" class="form-control" class="mt-2 mb-2" name="description" rows="5" required></textarea>
-                    </div>
+                        {{-- SKU --}}
+                        <div class="mb-3">
+                            <label for="sku" class="form-label">SKU</label>
+                            <input type="text" class="form-control" id="sku" name="sku" required>
+                        </div>
 
-                    <x-primary-button class="mt-3">Submit</x-primary-button>
+                        {{-- Description --}}
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea id="description" name="description" class="form-control" rows="5" required></textarea>
+                        </div>
+
+                        {{-- Submit --}}
+                        <button type="submit" class="btn btn-primary">Submit</button>
+
                     </form>
                 </div>
             </div>
         </div>
     </section>
 
-    <x-slot name="slotscripts">
+    {{-- TinyMCE Script --}}
+    <x-slot name="scripts">
+        <script src="https://cdn.tiny.cloud/1/k1adu2hfth0ilwdg7l6biccjuusy4empbxswx6g152b9722b/tinymce/8/tinymce.min.js"
+                referrerpolicy="origin"></script>
         <script>
             tinymce.init({
-                selector: 'textarea#tinymce_editor',
-                plugins: [
-                    // Core editing features
-                    'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount',
-                    // Your account includes a free trial of TinyMCE premium features
-                    // Try the most popular premium features until Oct 17, 2025:
-                    'checklist', 'mediaembed', 'casechange', 'formatpainter', 'pageembed', 'a11ychecker', 'tinymcespellchecker', 'permanentpen',
-                    'powerpaste', 'advtable', 'advcode', 'advtemplate', 'ai', 'uploadcare', 'mentions', 'tinycomments',
-                    'tableofcontents', 'footnotes', 'mergetags', 'autocorrect', 'typography', 'inlinecss', 'markdown',
-                    'importword', 'exportword', 'exportpdf'
-                ],
-                toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link media table mergetags | ' +
-                         'addcomment showcomments | spellcheckdialog a11ycheck typography uploadcare | align lineheight | ' +
-                         'checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-                tinycomments_mode: 'embedded',
-                tinycomments_author: 'Author name',
-                mergetags_list: [
-                    { value: 'First.Name', title: 'First Name' },
-                    { value: 'Email', title: 'Email' },
-                ],
-                ai_request: (request, respondWith) =>
-                    respondWith.string(() => Promise.reject('See docs to implement AI Assistant')),
-                uploadcare_public_key: '97570bfb1c52579173dc',
+                selector: '#description',
+                plugins: 'link image media table lists code',
+                toolbar: 'undo redo | formatselect | bold italic | alignleft aligncenter alignright | bullist numlist | link image media | code',
+                setup: function(editor) {
+                    editor.on('change', function() {
+                        editor.save(); // sync content to textarea
+                    });
+                }
+            });
+
+            // Ensure TinyMCE content is saved on submit
+            document.getElementById('product-form').addEventListener('submit', function() {
+                tinymce.triggerSave();
             });
         </script>
     </x-slot>
+
 </x-app-layout>
