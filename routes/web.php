@@ -7,14 +7,13 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 Route::get('/', function () {
     //return view('welcome');
-    return view('pages.home');
+    //return view('pages.home');
+    return view('auth.login');
 });
 
-Route::get('/dashboard', function () {
-    return view('admin.dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [ProductController::class, 'index'])->middleware(['auth', 'verified', 'PreventBack'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth', 'PreventBack')->group(function () {
     // Profile Routes
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

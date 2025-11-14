@@ -24,10 +24,11 @@ class ProductStoreRequest extends FormRequest
         return [
             //
             'image' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
-            'images.*' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+            'images.*' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
             'name' => ['required', 'string', 'max:255'],
             'price' => ['required', 'numeric', 'min:0'],
             'tag' => ['required', 'string', 'max:255'],
+            'colors.*' => ['required', 'string'],
             'quantity' => ['required', 'integer', 'min:0'],
             'sku' => ['required', 'string', 'max:255', 'unique:products,sku'],
             'description' => ['required', 'string'],
