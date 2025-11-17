@@ -1,15 +1,23 @@
 <?php
 
+use App\Http\Controllers\AddToCartController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\PageController;
 
-Route::get('/', function () {
+Route::get('/login', function () {
     //return view('welcome');
     //return view('pages.home');
     return view('auth.login');
 });
+
+Route::get('/', [PageController::class, 'index'])->name('home');
+
+Route::get('/product-details/{id}', [PageController::class, 'show'])->name('product-details');
+
+Route::post('/add-to-cart/{id}', [AddToCartController::class, 'store'])->name('add-to-cart');
 
 Route::get('/dashboard', [ProductController::class, 'index'])->middleware(['auth', 'verified', 'PreventBack'])->name('dashboard');
 
