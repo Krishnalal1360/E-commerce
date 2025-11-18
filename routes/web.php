@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\PageController;
 
 Route::get('/login', function () {
@@ -18,6 +19,12 @@ Route::get('/', [PageController::class, 'index'])->name('home');
 Route::get('/product-details/{id}', [PageController::class, 'show'])->name('product-details');
 
 Route::post('/add-to-cart/{id}', [AddToCartController::class, 'store'])->name('add-to-cart');
+
+Route::delete('/remove-from-cart/{id}', [AddToCartController::class, 'destroy'])->name('remove-from-cart');
+
+Route::post('/update-cart-qty', [AddToCartController::class, 'update'])->name('update-cart-qty');
+
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 
 Route::get('/dashboard', [ProductController::class, 'index'])->middleware(['auth', 'verified', 'PreventBack'])->name('dashboard');
 

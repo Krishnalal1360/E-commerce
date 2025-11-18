@@ -8,6 +8,14 @@
                 <div class="col-lg-6 col-xl-5 wow fadeInLeft">
                     <div class="wsus__product_details_slider_area">
                         <div class="row slider-forFive">
+                                <div class="col-xl-12">
+                                    <div class="wsus__product_details_slide_show_img">
+                                        <img src="{{ asset('storage/' . $product->image) }}" alt="product" class="img-fluid w-100">
+                                        {{--  
+                                        <img src="{{ asset('storage/' . $image->path) }}" alt="product" class="img-fluid w-100">
+                                        --}}
+                                    </div>
+                                </div>
                                 @foreach ($product->images as $image)
                                     <div class="col-xl-12">
                                         <div class="wsus__product_details_slide_show_img">
@@ -47,7 +55,7 @@
                         <p>{!! $product->description !!}</p>
                         <h6 class="mt_30">Color</h6>
                         <select class="select_2 color" name="state">
-                            <option value="AL">Select Color</option>
+                            <option value="">Select Color</option>
                             @foreach ($product->colors as $color)
                                 <option value="{{ $color->name }}">{{ $color->name }}</option>
                             @endforeach
@@ -154,7 +162,12 @@
                             quantity: productQty,
                         },
                         beforeSend: function(){
-
+                            let result = validation();
+                            if(result === true){
+                                return true;
+                            }else{
+                                return false;
+                            }
                         },
                         success: function(data){
 
@@ -175,6 +188,14 @@
                         $(".quantity").val(productQty);
                     }
                 });
+                function validation(){
+                    let color = $('.color').val();
+                    if(color === ""){
+                        notyf.error('Kindly choose product color before adding into cart!');
+                        return false;
+                    }
+                    return true;
+                }
             });
         </script>
     </x-slot>

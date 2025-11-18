@@ -9,6 +9,7 @@ use App\Models\ProductColor;
 use App\Models\ProductImage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Flasher\Notyf\Prime\NotyfInterface;
 
 class ProductController extends Controller
 {
@@ -78,6 +79,8 @@ class ProductController extends Controller
                 ]);
             }
         }
+        //
+        notyf()->success('Product Created Successfully!');
         //
         return redirect()->back();
     }
@@ -165,6 +168,8 @@ class ProductController extends Controller
             }
         }
         //
+        notyf()->success('Product Updated Successfully!');
+        //
         return redirect()->back();
     }
 
@@ -185,6 +190,8 @@ class ProductController extends Controller
         }
         //
         $product->delete();
+        //
+        notyf()->success('Product Deleted Successfully!');
         //
         return redirect()->back();
     }
